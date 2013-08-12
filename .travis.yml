@@ -1,17 +1,17 @@
 language: ruby
 rvm:
-- 2.0.0
+    - 2.0.0
 services:
-- postgresql
+    - postgresql
 before_script:
-- psql -c 'create database rails_hockey_stats_test;' -U postgres
+    - psql -c 'create database rails_hockey_stats_test;' -U postgres
 deploy:
-  provider: heroku
-  strategy: git
-  api_key:
-    master:
-      secure: ZtCSS1THnAavoygVt8qh7egHZXG/fvBdkK5CIcuFdbEHtYmS7TQK/GSolSQuzxRpULXP22h1hm+cJrUY8FqSOYqSqvxKlI3JMHTi+xdJK/1BT8w23JvOvibdtflRhQ7uDCjP9jgzhCS1U7MVHXPeRtrQv3M07RSwc5Y9AXjjpDA=
-  app:
-    master: rails-hockey-stats
-  run:
-  - "rake db:migrate"
+    provider: heroku
+    strategy: git
+    api_key:
+        master:
+            secure: ZtCSS1THnAavoygVt8qh7egHZXG/fvBdkK5CIcuFdbEHtYmS7TQK/GSolSQuzxRpULXP22h1hm+cJrUY8FqSOYqSqvxKlI3JMHTi+xdJK/1BT8w23JvOvibdtflRhQ7uDCjP9jgzhCS1U7MVHXPeRtrQv3M07RSwc5Y9AXjjpDA=
+    app:
+        master: rails-hockey-stats
+    run:
+        - "rake db:migrate"
