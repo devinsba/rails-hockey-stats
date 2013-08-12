@@ -60,3 +60,5 @@ gem 'unicorn'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+gem 'coveralls', require: false
