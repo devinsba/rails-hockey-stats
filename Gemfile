@@ -11,6 +11,12 @@ gem 'pg'
 # NewRelic monitoring
 gem 'newrelic_rpm'
 
+# IronMQ
+gem 'iron_mq'
+
+# Add worker gem
+gem 'delayed_job_active_record'
+
 # Heroku gems
 gem 'rails_12factor', group: :production
 
