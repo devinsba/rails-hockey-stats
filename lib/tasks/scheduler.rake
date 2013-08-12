@@ -14,3 +14,8 @@ task :update_games => :environment do
 	end
 	puts "done."
 end
+
+task :historic_games => :environment do
+	puts "Queueing up historic_games processing..."
+	puts "done."
+end
