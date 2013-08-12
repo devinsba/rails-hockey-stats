@@ -81,7 +81,7 @@ class Game
 				event = {
 					'game' => @id,
 					'period' => Integer(cells[1].content),
-					'time' => cells[3].content.match('^([1-2]?[0-9]:[0-5][0-9])')[0],
+					'time' => __timeToInt(cells[3].content.match('^([1-2]?[0-9]:[0-5][0-9])')[0]),
 					'event_type' => EVENT_TYPE_MAP[type]
 				}
 				m = self.method(EVENT_PARSER_MAP[type])
@@ -141,5 +141,13 @@ class Game
 		event['player'] = matches[2]
 		event['against'] = '' #TODO make this the current goalie for the opponent
 		event['zone'] = matches[3][0]
+	end
+
+	def __timeToInt(time)
+		puts time
+		matches = time.match('([0-9]*):([0-9]*)')
+		min = Integer(matches[1])
+		sec = Integer(matches[2].sub(/^0/, ''))
+		return (min * 60) + sec
 	end
 end
