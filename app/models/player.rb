@@ -4,4 +4,7 @@ class Player
   def initialize(id)
     @id = id
   end
+
+  def on_ice?(period, time)
+  end
 end
