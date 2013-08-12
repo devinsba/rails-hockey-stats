@@ -1,3 +1,5 @@
 == README
 
-{<img src="https://travis-ci.org/devinsba/rails-hockey-stats.png?branch=master" alt="Build Status" />}[https://travis-ci.org/devinsba/rails-hockey-stats]
+Deployed Status: {<img src="https://travis-ci.org/devinsba/rails-hockey-stats.png?branch=master" alt="Build Status" />}[https://travis-ci.org/devinsba/rails-hockey-stats]
+
+Development Status: {<img src="https://travis-ci.org/devinsba/rails-hockey-stats.png?branch=develop" alt="Build Status" />}[https://travis-ci.org/devinsba/rails-hockey-stats]
