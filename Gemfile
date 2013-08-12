@@ -17,6 +17,9 @@ gem 'iron_mq'
 # Add worker gem
 gem 'delayed_job_active_record'
 
+# HTML parser
+gem 'nokogiri'
+
 # Heroku gems
 gem 'rails_12factor', group: :production
 
