@@ -1,5 +1,5 @@
 == README
 
-Deployed Status: {<img src="https://travis-ci.org/devinsba/rails-hockey-stats.png?branch=master" alt="Build Status" />}[https://travis-ci.org/devinsba/rails-hockey-stats]
+Deployed Status: {<img src="https://travis-ci.org/devinsba/rails-hockey-stats.png?branch=master" alt="Build Status" />}[https://travis-ci.org/devinsba/rails-hockey-stats]{<img src="https://coveralls.io/repos/devinsba/rails-hockey-stats/badge.png?branch=master" alt="Coverage Status" />}[https://coveralls.io/r/devinsba/rails-hockey-stats?branch=master]
 
-Development Status: {<img src="https://travis-ci.org/devinsba/rails-hockey-stats.png?branch=develop" alt="Build Status" />}[https://travis-ci.org/devinsba/rails-hockey-stats]
+Development Status: {<img src="https://travis-ci.org/devinsba/rails-hockey-stats.png?branch=develop" alt="Build Status" />}[https://travis-ci.org/devinsba/rails-hockey-stats] {<img src="https://coveralls.io/repos/devinsba/rails-hockey-stats/badge.png?branch=develop" alt="Coverage Status" />}[https://coveralls.io/r/devinsba/rails-hockey-stats?branch=develop]
