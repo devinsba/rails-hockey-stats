@@ -14,10 +14,10 @@ EVENT_TYPE_MAP = {
 }
 
 EVENT_PARSER_MAP = {
-  'FAC' => '_parseFaceoff',
-  'MISS' => '_parseMiss',
-  'BLOCK' => '_parseBlock',
-  'SHOT' => '_parseShot'
+  'FAC' => '_parse_faceoff',
+  'MISS' => '_parse_miss',
+  'BLOCK' => '_parse_block',
+  'SHOT' => '_parse_shot'
 }
 
 class Game
@@ -25,51 +25,51 @@ class Game
     @id = id
   end
 
-  def getData
-    puts 'getData'
-    getPlayers
-    getShifts
-    getEvents
-    _processData
+  def get_data
+    puts 'get_data'
+    get_players
+    get_shifts
+    get_events
+    _process_data
   end
-  handle_asynchronously :getData
+  handle_asynchronously :get_data
 
-  def getPlayers
-    puts 'getPlayers'
+  def get_players
+    puts 'get_players'
     @box = Nokogiri::HTML(open(BOXSCORE % @id))
-    _processPlayers(@box)
+    _process_players(@box)
   end
 
-  def getShifts
-    puts 'getShifts'
-    _processGoals(@box)
+  def get_shifts
+    puts 'get_shifts'
+    _process_goals(@box)
     home = Nokogiri::HTML(open(HOME_TOI % [Integer(@id[0, 4]), Integer(@id[0, 4]) + 1, @id[4, 6]]))
-    _processShifts(home)
+    _process_shifts(home)
     away = Nokogiri::HTML(open(AWAY_TOI % [Integer(@id[0, 4]), Integer(@id[0, 4]) + 1, @id[4, 6]]))
-    _processShifts(away)
+    _process_shifts(away)
   end
 
-  def getEvents
-    puts 'getEvents'
+  def get_events
+    puts 'get_events'
     events = Nokogiri::HTML(open(EVENTS % [Integer(@id[0, 4]), Integer(@id[0, 4]) + 1, @id[4, 6]]))
-    _processEvents(events)
-    _processPenalties(@box)
+    _process_events(events)
+    _process_penalties(@box)
   end
 
-  def _processGoals(page)
+  def _process_goals(page)
   end
 
-  def _processPlayers(page)
-    puts '_processPlayers'
+  def _process_players(page)
+    puts '_process_players'
   end
 
-  def _processShifts(page)
-    puts '_processShifts'
+  def _process_shifts(page)
+    puts '_process_shifts'
     puts 'process the TOI data'
   end
 
-  def _processEvents(page)
-    puts '_processEvents'
+  def _process_events(page)
+    puts '_process_events'
     headings = page.css('td.heading')
     @away = headings[6].content.match('[A-Z]{2,3}|[A-Z]\.[A-Z]')[0]
     @home = headings[7].content.match('[A-Z]{2,3}|[A-Z]\.[A-Z]')[0]
@@ -80,7 +80,7 @@ class Game
         event = {
           'game' => @id,
           'period' => Integer(cells[1].content),
-          'time' => __timeToInt(cells[3].content.match('^([1-2]?[0-9]:[0-5][0-9])')[0]),
+          'time' => __time_to_int(cells[3].content.match('^([1-2]?[0-9]:[0-5][0-9])')[0]),
           'event_type' => EVENT_TYPE_MAP[type]
         }
         m = self.method(EVENT_PARSER_MAP[type])
@@ -89,16 +89,16 @@ class Game
     end
   end
 
-  def _processPenalties(page)
+  def _process_penalties(page)
     puts 'Process penalty data'
   end
 
-  def _processData
-    puts '_processData'
+  def _process_data
+    puts '_process_data'
     puts 'Process the data and drop it in hadoop'
   end
 
-  def _parseFaceoff(event, desc)
+  def _parse_faceoff(event, desc)
     winTeam = desc.match('^[A-Z]{2,3}|[A-Z]\.[A-Z]')[0]
     loseTeam = winTeam.eql?(@home) ? @away : @home
     winner = desc.match('%s #([0-9]{1,2})' % winTeam)[1]
@@ -111,7 +111,7 @@ class Game
     event['zone'] = zone
   end
 
-  def _parseMiss(event, desc)
+  def _parse_miss(event, desc)
     matches = desc.match('^([A-Z]{2,3}|[A-Z]\.[A-Z]).*#([0-9]{1,2}).*(Neu|Def|Off)\. Zone')
     event['win_team'] = matches[1].eql?(@home) ? @away.delete('.') : @home.delete('.')
     event['player'] = matches[2]
@@ -120,7 +120,7 @@ class Game
     event['zone'] = matches[3][0]
   end
 
-  def _parseBlock(event, desc)
+  def _parse_block(event, desc)
     matches = desc.match('#([0-9]{1,2}).*#([0-9]{1,2})')
     loseTeam = desc.match('^[A-Z]{2,3}|[A-Z]\.[A-Z]')[0]
     winTeam = loseTeam.eql?(@home) ? @away : @home
@@ -134,7 +134,7 @@ class Game
     event['zone'] = zone
   end
 
-  def _parseShot(event, desc)
+  def _parse_shot(event, desc)
     matches = desc.match('^([A-Z]{2,3}|[A-Z]\.[A-Z]).*#([0-9]{1,2}).*(Neu|Def|Off)\. Zone')
     event['win_team'] = matches[1].eql?(@away) ? @away.delete('.') : @home.delete('.')
     event['player'] = matches[2]
@@ -143,7 +143,7 @@ class Game
     event['zone'] = matches[3][0]
   end
 
-  def __timeToInt(time)
+  def __time_to_int(time)
     matches = time.match('([0-9]*):([0-9]*)')
     min = Integer(matches[1])
     sec = Integer(matches[2].sub(/^0/, ''))
