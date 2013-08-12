@@ -48,7 +48,7 @@ test:
   adapter: postgresql
   host: 127.0.0.1
   encoding: unicode
-  database: rails-hockey-stats_test
+  database: rails_hockey_stats_test
   pool: 5
   username: postgres
   password:
