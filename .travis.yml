@@ -9,9 +9,9 @@ deploy:
     provider: heroku
     strategy: git
     api_key:
-        master:
-            secure: ZtCSS1THnAavoygVt8qh7egHZXG/fvBdkK5CIcuFdbEHtYmS7TQK/GSolSQuzxRpULXP22h1hm+cJrUY8FqSOYqSqvxKlI3JMHTi+xdJK/1BT8w23JvOvibdtflRhQ7uDCjP9jgzhCS1U7MVHXPeRtrQv3M07RSwc5Y9AXjjpDA=
+        secure: ZtCSS1THnAavoygVt8qh7egHZXG/fvBdkK5CIcuFdbEHtYmS7TQK/GSolSQuzxRpULXP22h1hm+cJrUY8FqSOYqSqvxKlI3JMHTi+xdJK/1BT8w23JvOvibdtflRhQ7uDCjP9jgzhCS1U7MVHXPeRtrQv3M07RSwc5Y9AXjjpDA=
     app:
         master: rails-hockey-stats
+        develop: rails-hockey-develop
     run:
         - "rake db:migrate"
