@@ -8,8 +8,8 @@ task :update_games => :environment do
   today.css('table.schedTbl a.btn').each do |link|
     if link['href'].include?('recap')
       id = link['href'].match('id=([0-9]*)')[1]
-      g = Game.new(id)
-      g.getData
+      g = Parse::Game.new(id)
+      g.get_data
     end
   end
   puts "done."

@@ -20,7 +20,7 @@ EVENT_PARSER_MAP = {
   'SHOT' => '_parse_shot'
 }
 
-class Game
+class Parse::Game
   def initialize(id)
     @id = id
   end
