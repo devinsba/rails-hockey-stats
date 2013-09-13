@@ -7,13 +7,6 @@ HOME_TOI = 'http://www.nhl.com/scores/htmlreports/%d%d/TH%s.HTM'
 AWAY_TOI = 'http://www.nhl.com/scores/htmlreports/%d%d/TV%s.HTM'
 EVENTS = 'http://www.nhl.com/scores/htmlreports/%d%d/PL%s.HTM'
 
-EVENT_TYPE_MAP = {
-  'FAC' => 'faceoff',
-  'MISS' => 'miss',
-  'BLOCK' => 'block',
-  'SHOT' => 'shot'
-}
-
 EVENT_PARSER_MAP = {
   'FAC' => '_parse_faceoff',
   'MISS' => '_parse_miss',
@@ -24,6 +17,7 @@ EVENT_PARSER_MAP = {
 
 class Parse::Game2007 < Parse::Game
   def get_data
+    puts @id
     puts 'get_data'
     get_players
     get_shifts
@@ -54,10 +48,30 @@ class Parse::Game2007 < Parse::Game
   end
 
   def _process_goals(page)
+    puts '_process_goals'
   end
 
   def _process_players(page)
-    puts '_process_players'
+    page.css('table.gcBoxscorePlayerStats tbody').each_with_index do |table, i|
+      table.css('td.left a.undMe').each_with_index do |player, j|
+        if not player.nil?
+          reg = player['href'].match('[0-9]*$')
+          if not reg.nil?
+            @p = Player.find_by(nhl_id: Integer(reg[0]))
+            if @p.nil?
+              @p = Player.new(nhl_id: reg[0])
+              @p.retrieve(@p.nhl_id)
+              @p.save
+            end
+            if i < 2
+              @away_team.push(@p)
+            else
+              @home_team.push(@p)
+            end
+          end
+        end
+      end
+    end
   end
 
   def _process_shifts(page)
@@ -66,33 +80,33 @@ class Parse::Game2007 < Parse::Game
   end
 
   def _process_events(page)
-    puts '_process_events'
     headings = page.css('td.heading')
     @away = headings[6].content.match('[A-Z]{2,3}|[A-Z]\.[A-Z]')[0]
     @home = headings[7].content.match('[A-Z]{2,3}|[A-Z]\.[A-Z]')[0]
     page.css('tr.evenColor').each do |row|
       cells = row.css('td.bborder')
-      type = cells[4].content
-      if not EVENT_TYPE_MAP[type].nil?
-        event = {
-          'game' => @id,
-          'period' => Integer(cells[1].content),
-          'time' => __time_to_int(cells[3].content.match('^([1-2]?[0-9]:[0-5][0-9])')[0]),
-          'event_type' => EVENT_TYPE_MAP[type]
-        }
-        m = self.method(EVENT_PARSER_MAP[type])
-        m.call(event, cells[5].content)
+      if not cells.nil?
+        type = cells[4].content
+        if not EVENT_PARSER_MAP[type].nil?
+          event = {
+            'game' => @id,
+            'period' => Integer(cells[1].content),
+            'time' => __time_to_int(cells[3].content.match('^([1-2]?[0-9]:[0-5][0-9])')[0]),
+            'event_type' => type
+          }
+          m = self.method(EVENT_PARSER_MAP[type])
+          m.call(event, cells[5].content)
+        end
       end
     end
   end
 
   def _process_penalties(page)
-    puts 'Process penalty data'
+    puts '_process_penalties'
   end
 
   def _process_data
     puts '_process_data'
-    puts 'Process the data and drop it in hadoop'
   end
 
   def _parse_faceoff(event, desc)

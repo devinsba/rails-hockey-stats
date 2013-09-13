@@ -1,6 +1,8 @@
 class Parse::Game
   def initialize(id)
     @id = id
+    @away_team = []
+    @home_team = []
   end
 
   def run
