@@ -52,10 +52,6 @@ GEM
       multi_json (~> 1.0)
     hike (1.2.3)
     i18n (0.6.4)
-    iron_core (1.0.1)
-      rest (>= 2.2.0)
-    iron_mq (4.0.3)
-      iron_core (>= 0.5.1)
     jbuilder (1.5.0)
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)
@@ -71,7 +67,6 @@ GEM
     mini_portile (0.5.1)
     minitest (4.7.5)
     multi_json (1.7.9)
-    net-http-persistent (2.9)
     newrelic_rpm (3.6.6.147)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
@@ -102,9 +97,6 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
-    rest (2.6.3)
-      net-http-persistent
-      rest-client (>= 0.3.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     sass (3.2.10)
@@ -153,7 +145,6 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   coveralls
   delayed_job_active_record
-  iron_mq
   jbuilder (~> 1.2)
   jquery-rails
   newrelic_rpm
