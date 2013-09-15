@@ -14,6 +14,13 @@ EVENT_PARSER_MAP = {
   'SHOT' => '_parse_shot'
 }
 
+EVENT_TYPE_MAP = {
+  'FAC' => 'faceoff',
+  'MISS' => 'miss',
+  'BLOCK' => 'block',
+  'SHOT' => 'shot'
+}
+
 
 class Parse::Game2007 < Parse::Game
   def get_data
@@ -92,7 +99,7 @@ class Parse::Game2007 < Parse::Game
             'game' => @id,
             'period' => Integer(cells[1].content),
             'time' => __time_to_int(cells[3].content.match('^([1-2]?[0-9]:[0-5][0-9])')[0]),
-            'event_type' => type
+            'event_type' => EVENT_TYPE_MAP[type]
           }
           m = self.method(EVENT_PARSER_MAP[type])
           m.call(event, cells[5].content)
